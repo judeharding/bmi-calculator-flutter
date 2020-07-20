@@ -11,8 +11,9 @@ import 'reusable_card.dart';
 //const = set at COMPILE time and does NOT have access at runtime
 
 const bottomContainerHeight = 80.0;
-const activeCardColor = Color(0xff1d1e33);
-const bottomContainerColor = Color(0xFFEB1555);
+const activeCardColour = Color(0xff1d1e33);
+const inactiveCardColour = Color(0xff111328);
+const bottomContainerColour = Color(0xFFEB1555);
 
 class InputPage extends StatefulWidget {
   @override
@@ -20,6 +21,30 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleCardColour = inactiveCardColour;
+  Color femaleCardColour = inactiveCardColour;
+//1 = male, 2 = female
+  void updateColour(int gender) {
+    //male card
+    if (gender == 1) {
+      //
+      if (maleCardColour == inactiveCardColour) {
+        maleCardColour = activeCardColour;
+        femaleCardColour = inactiveCardColour;
+      } else {
+        maleCardColour = inactiveCardColour;
+      }
+    } else {
+      if (femaleCardColour == inactiveCardColour) {
+        femaleCardColour = activeCardColour;
+        maleCardColour = inactiveCardColour;
+      } else {
+        femaleCardColour = inactiveCardColour;
+      }
+    }
+    //
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +60,36 @@ class _InputPageState extends State<InputPage> {
               child: Row(
             children: <Widget>[
               Expanded(
-                child: ReusableCard(
-                  colour: activeCardColor,
-                  cardChild: IconContent(
-                    icon: FontAwesomeIcons.mars,
-                    label: 'MALE',
+                child: GestureDetector(
+                  onTap: () {
+//                    print('male card pressed');
+                    setState(() {
+                      updateColour(1);
+                    });
+                  },
+                  child: ReusableCard(
+                    colour: maleCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: ReusableCard(
-                  colour: activeCardColor,
-                  cardChild: IconContent(
-                    icon: FontAwesomeIcons.venus,
-                    label: 'FEMALE',
+                child: GestureDetector(
+                  onTap: () {
+//                    print('female card pressed');
+                    setState(() {
+                      updateColour(2);
+                    });
+                  },
+                  child: ReusableCard(
+                    colour: femaleCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: 'FEMALE',
+                    ),
                   ),
                 ),
               ),
@@ -56,7 +97,7 @@ class _InputPageState extends State<InputPage> {
           )),
           Expanded(
             child: ReusableCard(
-              colour: activeCardColor,
+              colour: activeCardColour,
             ),
           ),
           Expanded(
@@ -64,12 +105,12 @@ class _InputPageState extends State<InputPage> {
             children: <Widget>[
               Expanded(
                 child: ReusableCard(
-                  colour: activeCardColor,
+                  colour: activeCardColour,
                 ),
               ),
               Expanded(
                 child: ReusableCard(
-                  colour: activeCardColor,
+                  colour: activeCardColour,
                 ),
               ),
             ],
@@ -80,7 +121,7 @@ class _InputPageState extends State<InputPage> {
 //            ),
 //          ),
           Container(
-            color: bottomContainerColor,
+            color: bottomContainerColour,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
             height: bottomContainerHeight,
