@@ -4,16 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //IMPORTING MY WIDGETS
 import 'icon_content.dart';
 import 'reusable_card.dart';
+import 'constants.dart';
 
 //final vs const - both are immutable  stateless are immutable too
 //final = only set once at ANY time during a run --
 //      if created AFTER the code is compiled ex DateTime.now()
 //const = set at COMPILE time and does NOT have access at runtime
-
-const bottomContainerHeight = 80.0;
-const activeCardColour = Color(0xff1d1e33);
-const inactiveCardColour = Color(0xff111328);
-const bottomContainerColour = Color(0xFFEB1555);
 
 enum Gender { male, female }
 
@@ -35,6 +31,7 @@ class _InputPageState extends State<InputPage> {
 //        child: Text('Body Text'),
 //      ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
               child: Row(
@@ -47,8 +44,8 @@ class _InputPageState extends State<InputPage> {
                     });
                   },
                   colour: selectedGender == Gender.male
-                      ? activeCardColour
-                      : inactiveCardColour,
+                      ? kActiveCardColour
+                      : kInactiveCardColour,
                   cardChild: IconContent(
                     icon: FontAwesomeIcons.mars,
                     label: 'MALE',
@@ -63,8 +60,8 @@ class _InputPageState extends State<InputPage> {
                     });
                   },
                   colour: selectedGender == Gender.female
-                      ? activeCardColour
-                      : inactiveCardColour,
+                      ? kActiveCardColour
+                      : kInactiveCardColour,
                   cardChild: IconContent(
                     icon: FontAwesomeIcons.venus,
                     label: 'FEMALE',
@@ -75,7 +72,25 @@ class _InputPageState extends State<InputPage> {
           )),
           Expanded(
             child: ReusableCard(
-              colour: activeCardColour,
+              colour: kActiveCardColour,
+              cardChild: Column(
+//                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIGHT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '180',
+                        style: kNumberTextStyle,
+                      ),
+                      Text('cm'),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -83,12 +98,12 @@ class _InputPageState extends State<InputPage> {
             children: <Widget>[
               Expanded(
                 child: ReusableCard(
-                  colour: activeCardColour,
+                  colour: kActiveCardColour,
                 ),
               ),
               Expanded(
                 child: ReusableCard(
-                  colour: activeCardColour,
+                  colour: kActiveCardColour,
                 ),
               ),
             ],
@@ -99,10 +114,10 @@ class _InputPageState extends State<InputPage> {
 //            ),
 //          ),
           Container(
-            color: bottomContainerColour,
+            color: kBottomContainerColour,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomContainerHeight,
+            height: kBottomContainerHeight,
           ),
         ],
       ),
