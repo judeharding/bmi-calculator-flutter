@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 //IMPORTING MY WIDGETS
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'constants.dart';
-import 'results_page.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/constants.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/screens/calculator_brain.dart';
 
 //final vs const - both are immutable  stateless are immutable too
 //final = only set once at ANY time during a run --
@@ -21,8 +24,8 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
-  int height = 170;
-  int weight = 60;
+  int height = 62;
+  int weight = 137;
   int age = 23;
 
   @override
@@ -90,7 +93,7 @@ class _InputPageState extends State<InputPage> {
                         height.toString(),
                         style: kNumberTextStyle,
                       ),
-                      Text('cm'),
+                      Text('in'),
                     ],
                   ),
                   SliderTheme(
@@ -106,8 +109,10 @@ class _InputPageState extends State<InputPage> {
                     ),
                     child: Slider(
                       value: height.toDouble(),
-                      min: 120.0,
-                      max: 220.0,
+//                      min: 120.0, METRIC
+//                      max: 220.0, METRIC
+                      min: 48.0,
+                      max: 84.0,
                       onChanged: (double newValue) {
                         setState(() {
 //                          print(newValue);
@@ -132,9 +137,18 @@ class _InputPageState extends State<InputPage> {
                         'WEIGHT',
                         style: kLabelTextStyle,
                       ),
-                      Text(
-                        weight.toString(),
-                        style: kNumberTextStyle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          Text(
+                            weight.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          SizedBox(width: 5.0),
+                          Text('lbs'),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -210,56 +224,32 @@ class _InputPageState extends State<InputPage> {
 //              colour: activeCardColor,
 //            ),
 //          ),
-          GestureDetector(
+          BottomButton(
+            buttonTitle: 'CALCULATE',
             onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+
 //              Navigator.pushNamed(context, '/resultsPage');
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ResultsPage();
+                    return ResultsPage(
+                      bmiResult: calc.calaculateBMI(),
+                      resultText: calc.getResults(),
+                      interpretation: calc.getInterpretation(),
+                    );
                   },
                 ),
               );
             }, // ontap
-            child: Container(
-              color: kBottomContainerColour,
-              margin: EdgeInsets.only(top: 10.0),
-              padding: EdgeInsets.only(bottom: 15.0),
-              width: double.infinity,
-              height: kBottomContainerHeight,
-              child: Center(
-                child: Text(
-                  'CALCULATE',
-                  style: kLargeButtonTextStyle,
-                ),
-              ),
-            ),
           ),
         ],
       ),
 //      floatingActionButton: FloatingActionButton(
 //        child: Icon(Icons.add),
 //      ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({@required this.icon, @required this.onPressedBtn});
-
-  final IconData icon;
-  final Function onPressedBtn;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: onPressedBtn,
-      elevation: 6.0,
-      constraints: BoxConstraints(minWidth: 56.0, minHeight: 56.0),
-      shape: CircleBorder(),
-      fillColor: Color(0xff4c4f5e),
     );
   }
 }

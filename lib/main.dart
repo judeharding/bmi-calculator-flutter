@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'input_page.dart';
-import 'constants.dart';
-import 'results_page.dart';
+
+//IMPORTING MY WIDGETS
+import 'package:bmi_calculator/screens/input_page.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 
 void main() => runApp(BMICalculator());
 
