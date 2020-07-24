@@ -13,7 +13,7 @@ class CalculatorBrain {
 
   String calaculateBMI() {
 //    _bmi = weight / pow(height / 100, 2); METRIC
-    _bmi = (703 * weight) / (height * height);
+    _bmi = (703 * weight) / (height * height); // IMPERIAL
     return _bmi.toStringAsFixed(1);
   }
 
