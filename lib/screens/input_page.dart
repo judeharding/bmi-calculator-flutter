@@ -188,9 +188,18 @@ class _InputPageState extends State<InputPage> {
                         'AGE',
                         style: kLabelTextStyle,
                       ),
-                      Text(
-                        age.toString(),
-                        style: kNumberTextStyle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          Text(
+                            age.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          SizedBox(width: 5.0),
+                          Text('yrs'),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
